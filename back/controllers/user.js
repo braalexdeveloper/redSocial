@@ -122,10 +122,10 @@ const allUsers = (req, res) => {
     if (req.params.page) {
         page = req.params.page;
     }
-    page = parseInt(page);
+   // page = parseInt(page);
 
     //Consulta con mongoose pagination
-    let itemsPerPage = 5;
+    let itemsPerPage = 2;
     User.paginate({}, { limit: itemsPerPage, page, select: "-password -role -__v -email" }, async (err, result) => {
         if (err) return res.status(404).send({
             status: "error",
@@ -137,7 +137,8 @@ const allUsers = (req, res) => {
         //Decolver el resultado(posteriormente info de follow)
         let followUserIds = await followedService.followUserIds(req.user.id);
 
-        return res.status(404).send({
+        return res.status(200).send({
+            status:"success",
             result,
             user_following: followUserIds.following,
             user_follow_me: followUserIds.followers

@@ -4,13 +4,18 @@ import { PrivateLayout } from '../components/layout/private/PrivateLayout';
 
 import { PublicLayout } from '../components/layout/public/PublicLayout';
 import { Feed } from '../components/publication/Feed';
+import { Config } from '../components/user/Config';
 import { Login } from '../components/user/Login';
+import { Logout } from '../components/user/Logout';
+import { People } from '../components/user/People';
 import { Registro } from '../components/user/Registro';
+import { AuthProvider } from '../context/AuthProvider';
 
 
 export const Routing = () => {
   return (
     <BrowserRouter>
+    <AuthProvider>
       <Routes>
         <Route path='/' element={<PublicLayout />}>
           <Route index element={<Login />} />
@@ -21,6 +26,9 @@ export const Routing = () => {
         <Route path='/social' element={<PrivateLayout />} >
           <Route index element={<Feed />} />
           <Route path="feed" element={<Feed />} />
+          <Route path="logout" element={<Logout/>} />
+          <Route path="people" element={<People/>} />
+          <Route path="ajustes" element={<Config/>} />
         </Route>
 
         <Route path='*' element={
@@ -33,6 +41,7 @@ export const Routing = () => {
         }/>
 
         </Routes>
+        </AuthProvider>
     </BrowserRouter >
   )
 }
