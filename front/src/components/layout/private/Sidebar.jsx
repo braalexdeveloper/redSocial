@@ -1,13 +1,22 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import avatar from "../../../assets/img/user.png";
 import { Global } from '../../../helpers/Global';
 import useAuth from '../../../hooks/useAuth';
 
 export const Sidebar = () => {
-    const {auth,counters}=useAuth();
-    console.log(auth,counters)
-  return (
-    <aside className="layout__aside">
+    const { auth, counters } = useAuth();
+
+    const { form, changed } = useForm({});
+
+    const savePublication = async (e) => {
+        e.preventDefault();
+        
+    }
+
+
+    return (
+        <aside className="layout__aside">
 
             <header className="aside__header">
                 <h1 className="aside__title">Hola, {auth.name}</h1>
@@ -19,11 +28,11 @@ export const Sidebar = () => {
 
                     <div className="profile-info__general-info">
                         <div className="general-info__container-avatar">
-                            {!auth.image ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil"/> : auth.image==="default.png" ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil"/> : <img src={Global.url+"user/avatar/"+auth.image} className="container-avatar__img" alt="Foto de perfil"/>}
+                            {!auth.image ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + auth.image} className="container-avatar__img" alt="Foto de perfil" />}
                         </div>
 
                         <div className="general-info__container-names">
-                            <a href="#" className="container-names__name">{auth.name } { auth.surname }</a>
+                            <a href="#" className="container-names__name">{auth.name} {auth.surname}</a>
                             <p className="container-names__nickname">{auth.nick}</p>
                         </div>
                     </div>
@@ -31,18 +40,17 @@ export const Sidebar = () => {
                     <div className="profile-info__stats">
 
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                            <Link to={"following/" + auth._id} className="following__link">
                                 <span className="following__title">Siguiendo</span>
                                 <span className="following__number">{counters.following}</span>
-                            </a>
+                            </Link>
                         </div>
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                            <Link to={"followers/" + auth._id} className="following__link">
                                 <span className="following__title">Seguidores</span>
                                 <span className="following__number">{counters.followed}</span>
-                            </a>
+                            </Link>
                         </div>
-
 
                         <div className="stats__following">
                             <a href="#" className="following__link">
@@ -58,19 +66,19 @@ export const Sidebar = () => {
 
                 <div className="aside__container-form">
 
-                    <form className="container-form__form-post">
+                    <form className="container-form__form-post" onSubmit={savePublication}>
 
                         <div className="form-post__inputs">
-                            <label htmlFor="post" className="form-post__label">¿Que estas pesando hoy?</label>
-                            <textarea name="post" className="form-post__textarea"></textarea>
+                            <label htmlFor="text" className="form-post__label">¿Que estas pesando hoy?</label>
+                            <textarea name="text" className="form-post__textarea" changed />
                         </div>
 
                         <div className="form-post__inputs">
-                            <label htmlFor="image" className="form-post__label">Sube tu foto</label>
-                            <input type="file" name="image" className="form-post__image"/>
+                            <label htmlFor="file" className="form-post__label">Sube tu foto</label>
+                            <input type="file" name="file0" id="file" className="form-post__image" />
                         </div>
 
-                        <input type="submit" value="Enviar" className="form-post__btn-submit" disabled/>
+                        <input type="submit" value="Enviar" className="form-post__btn-submit" disabled />
 
                     </form>
 
@@ -79,5 +87,5 @@ export const Sidebar = () => {
             </div>
 
         </aside>
-  )
+    )
 }

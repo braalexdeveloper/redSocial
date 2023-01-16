@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Global } from '../../helpers/Global';
-import { UserList } from './UserList';
+import { UserList } from '../user/UserList';
 
-export const People = () => {
+export const Following = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [more, setMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [following, setFollowing] = useState([]);
 
+  const params=useParams();
 
   useEffect(() => {
     allUsers(1);
@@ -16,7 +18,8 @@ export const People = () => {
 
   const allUsers = async (nextPage = 1) => {
     setLoading(true);
-    const request = await fetch(Global.url + "user/allUsers/" + nextPage, {
+    const userId=params.idUser;
+    const request = await fetch(Global.url + "follow/following/"+userId+"/" + nextPage, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -26,16 +29,20 @@ export const People = () => {
 
     const dataUsers = await request.json();
 
-    if (dataUsers.status === "success" && dataUsers.result.docs) {
-      let newUsers = dataUsers.result.docs;
+    if (dataUsers.status === "success" && dataUsers.follows) {
+        let newUsers=[];
+      dataUsers.follows.forEach(el=>{
+         newUsers=[...newUsers,el.followed]
+      })
+
       if (users.length >= 1) {
-        newUsers = [...users, ...dataUsers.result.docs];
+        newUsers = [...users, ...newUsers];
       }
       setUsers(newUsers);
       setLoading(false);
       setFollowing(dataUsers.user_following);
       //Paginación
-      if (users.length >= (dataUsers.result.total - dataUsers.result.docs.length)) {
+      if (users.length >= (dataUsers.total - dataUsers.follows.length)) {
         setMore(false);
       }
       //otra forma 
@@ -50,7 +57,7 @@ export const People = () => {
     <>
 
       <header className="content__header">
-        <h1 className="content__title">Gente</h1>
+        <h1 className="content__title">Siguiendo</h1>
 
       </header>
 

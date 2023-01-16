@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useAuth from "../../hooks/useAuth";
 import { Global } from '../../helpers/Global';
 import { SerializeForm } from '../../helpers/SerializeForm';
+import avatar from "../../assets/img/user.png";
 
 export const Config = () => {
 
