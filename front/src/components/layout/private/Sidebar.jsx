@@ -1,16 +1,73 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import avatar from "../../../assets/img/user.png";
 import { Global } from '../../../helpers/Global';
 import useAuth from '../../../hooks/useAuth';
+import { useForm } from '../../../hooks/useForm';
 
 export const Sidebar = () => {
     const { auth, counters } = useAuth();
 
     const { form, changed } = useForm({});
 
+    const [stored, setStored] = useState("not-stored");
+
     const savePublication = async (e) => {
+        
         e.preventDefault();
+
+        const token=localStorage.getItem("token");
+        //Recoger datos de lform
+        let newPublication = form;
+        //newPublication.user = auth._id;
+
+        //Peticion 
+        const request = await fetch(Global.url + "publication/save", {
+            method: "POST",
+            body: JSON.stringify(newPublication),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            }
+        });
+
+        const data = await request.json();
+
+        //Mostrar mensaje de éxito o error
+        if (data.status === "success") {
+            setStored("stored");
+        } else {
+            setStored("error");
+        }
+
+        //Subir imagen
+        const fileInput=document.querySelector("#file");
+        if(data.status==="success" && fileInput.files[0]){
+            const formData=new FormData();
+            formData.append("file0",fileInput.files[0]);
+
+            const uploadRequest=await fetch(Global.url+"publication/upload/"+data.publicationStored._id,{
+                method:"POST",
+                body:formData,
+                headers:{
+                    "Authorization":token
+                }
+            });
+
+            const dataRequest=await uploadRequest.json();
+
+            if(dataRequest.status==="success"){
+                setStored("stored");
+            }else{
+                setStored("error");
+            }
+
+            if(data.status==="success" && dataRequest.status==="success"){
+                const formulario=document.querySelector("#formulario");
+                formulario.reset();
+           }
+        }
+
         
     }
 
@@ -32,7 +89,7 @@ export const Sidebar = () => {
                         </div>
 
                         <div className="general-info__container-names">
-                            <a href="#" className="container-names__name">{auth.name} {auth.surname}</a>
+                            <Link to={"/social/profile/"+auth._id} className="container-names__name">{auth.name} {auth.surname}</Link>
                             <p className="container-names__nickname">{auth.nick}</p>
                         </div>
                     </div>
@@ -40,23 +97,23 @@ export const Sidebar = () => {
                     <div className="profile-info__stats">
 
                         <div className="stats__following">
-                            <Link to={"following/" + auth._id} className="following__link">
+                            <Link to={"/social/following/" + auth._id} className="following__link">
                                 <span className="following__title">Siguiendo</span>
                                 <span className="following__number">{counters.following}</span>
                             </Link>
                         </div>
                         <div className="stats__following">
-                            <Link to={"followers/" + auth._id} className="following__link">
+                            <Link to={"/social/followers/" + auth._id} className="following__link">
                                 <span className="following__title">Seguidores</span>
                                 <span className="following__number">{counters.followed}</span>
                             </Link>
                         </div>
 
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                        <Link to={"/social/profile/"+auth._id} className="following__link">
                                 <span className="following__title">Publicaciones</span>
                                 <span className="following__number">{counters.publications}</span>
-                            </a>
+                            </Link>
                         </div>
 
 
@@ -66,11 +123,13 @@ export const Sidebar = () => {
 
                 <div className="aside__container-form">
 
-                    <form className="container-form__form-post" onSubmit={savePublication}>
+                    {stored === "stored" ? <strong className='alert alert-success'>Publicada Correctamente!!</strong> : ''}
+                    {stored === "error" ? <strong className='alert alert-danger'>No se ha publicado!!</strong> : ''}
+                    <form id="formulario" className="container-form__form-post" onSubmit={savePublication}>
 
                         <div className="form-post__inputs">
                             <label htmlFor="text" className="form-post__label">¿Que estas pesando hoy?</label>
-                            <textarea name="text" className="form-post__textarea" changed />
+                            <textarea name="text" className="form-post__textarea" onChange={changed} />
                         </div>
 
                         <div className="form-post__inputs">
@@ -78,7 +137,7 @@ export const Sidebar = () => {
                             <input type="file" name="file0" id="file" className="form-post__image" />
                         </div>
 
-                        <input type="submit" value="Enviar" className="form-post__btn-submit" disabled />
+                        <input type="submit" value="Enviar" className="form-post__btn-submit"  />
 
                     </form>
 

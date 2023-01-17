@@ -267,6 +267,11 @@ body {
     background-color: var(--color-background-btn-success-hover);
     border-color: var(--color-border-btn-success-hover);
 }
+.btn-seguir-perfil{
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+   
+}
 .content__container-btn{
     width: 100%;
     display: flex;
@@ -449,7 +454,7 @@ button{
 }
 
 .alert{
-    width: 50%;
+    width: 60%;
     display: block;
     padding: 1rem;
     margin-bottom: 1rem;

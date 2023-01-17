@@ -4,7 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import { Global } from "../../../helpers/Global";
 
 const Nav = () => {
-    const { auth }=useAuth();
+    const { auth } = useAuth();
     return (
         <nav className="navbar__container-lists">
 
@@ -34,18 +34,18 @@ const Nav = () => {
 
             <ul className="container-lists__list-end">
                 <li className="list-end__item">
-                    <a href="#" className="list-end__link-image">
-                        {!auth.image ? <img src={avatar} className="list-end__img" alt="Foto de perfil"/> : auth.image==="default.png" ? <img src={avatar} className="list-end__img" alt="Foto de perfil"/> : <img src={Global.url+"user/avatar/"+auth.image} className="list-end__img" alt="Foto de perfil"/>}
-                    </a>
+                    <NavLink to={"/social/profile/" + auth._id} className="list-end__link-image">
+                        {!auth.image ? <img src={avatar} className="list-end__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="list-end__img" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + auth.image} className="list-end__img" alt="Foto de perfil" />}
+                    </NavLink>
                 </li>
                 <li className="list-end__item">
-                    <a href="#" className="list-end__link">
+                    <NavLink to={"/social/profile/" + auth._id} className="list-end__link">
                         <span className="list-end__name">{auth.nick}</span>
                         <i className="fa-solid fa-caret-down"></i>
-                    </a>
+                    </NavLink>
                 </li>
                 <li className="list-end__item">
-                <NavLink to="/social/ajustes" className="list-end__link">
+                    <NavLink to="/social/ajustes" className="list-end__link">
                         <i className="fa-solid fa-gear"></i>
                         <span className="list-end__name">Ajustes</span>
                     </NavLink>

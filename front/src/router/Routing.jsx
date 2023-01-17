@@ -10,6 +10,7 @@ import { Config } from '../components/user/Config';
 import { Login } from '../components/user/Login';
 import { Logout } from '../components/user/Logout';
 import { People } from '../components/user/People';
+import { Profile } from '../components/user/Profile';
 import { Registro } from '../components/user/Registro';
 import { AuthProvider } from '../context/AuthProvider';
 
@@ -33,6 +34,7 @@ export const Routing = () => {
           <Route path="ajustes" element={<Config/>} />
           <Route path="following/:idUser" element={<Following/>} />
           <Route path="followers/:idUser" element={<Followers/>} />
+          <Route path="profile/:idUser" element={<Profile/>} />
         </Route>
 
         <Route path='*' element={
