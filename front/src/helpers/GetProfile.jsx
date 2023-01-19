@@ -14,4 +14,5 @@ export const GetProfile=async(userId,setState)=>{
   if(data.status==="success"){
     setState(data.user)
   }
+  return data;
 }
