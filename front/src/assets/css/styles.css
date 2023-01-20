@@ -81,7 +81,9 @@ body {
 .layout__navbar *{
     color: var(--color-text-navbar);
 }
-
+.navbar__header{
+   width: 15%;
+}
 .navbar__title{
     font-size: 1.8rem;
     padding: 1.8rem;

@@ -13,10 +13,10 @@ export const Sidebar = () => {
     const [stored, setStored] = useState("not-stored");
 
     const savePublication = async (e) => {
-        
+
         e.preventDefault();
 
-        const token=localStorage.getItem("token");
+        const token = localStorage.getItem("token");
         //Recoger datos de lform
         let newPublication = form;
         //newPublication.user = auth._id;
@@ -41,34 +41,34 @@ export const Sidebar = () => {
         }
 
         //Subir imagen
-        const fileInput=document.querySelector("#file");
-        if(data.status==="success" && fileInput.files[0]){
-            const formData=new FormData();
-            formData.append("file0",fileInput.files[0]);
+        const fileInput = document.querySelector("#file");
+        if (data.status === "success" && fileInput.files[0]) {
+            const formData = new FormData();
+            formData.append("file0", fileInput.files[0]);
 
-            const uploadRequest=await fetch(Global.url+"publication/upload/"+data.publicationStored._id,{
-                method:"POST",
-                body:formData,
-                headers:{
-                    "Authorization":token
+            const uploadRequest = await fetch(Global.url + "publication/upload/" + data.publicationStored._id, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Authorization": token
                 }
             });
 
-            const dataRequest=await uploadRequest.json();
+            const dataRequest = await uploadRequest.json();
 
-            if(dataRequest.status==="success"){
+            if (dataRequest.status === "success") {
                 setStored("stored");
-            }else{
+            } else {
                 setStored("error");
             }
 
-            if(data.status==="success" && dataRequest.status==="success"){
-                const formulario=document.querySelector("#formulario");
-                formulario.reset();
-           }
-        }
 
-        
+        }
+        //if(data.status==="success" && dataRequest.status==="success"){
+        const formulario = document.querySelector("#formulario");
+        formulario.reset();
+        //}
+
     }
 
 
@@ -89,7 +89,7 @@ export const Sidebar = () => {
                         </div>
 
                         <div className="general-info__container-names">
-                            <Link to={"/social/profile/"+auth._id} className="container-names__name">{auth.name} {auth.surname}</Link>
+                            <Link to={"/social/profile/" + auth._id} className="container-names__name">{auth.name} {auth.surname}</Link>
                             <p className="container-names__nickname">{auth.nick}</p>
                         </div>
                     </div>
@@ -110,7 +110,7 @@ export const Sidebar = () => {
                         </div>
 
                         <div className="stats__following">
-                        <Link to={"/social/profile/"+auth._id} className="following__link">
+                            <Link to={"/social/profile/" + auth._id} className="following__link">
                                 <span className="following__title">Publicaciones</span>
                                 <span className="following__number">{counters.publications}</span>
                             </Link>
@@ -137,7 +137,7 @@ export const Sidebar = () => {
                             <input type="file" name="file0" id="file" className="form-post__image" />
                         </div>
 
-                        <input type="submit" value="Enviar" className="form-post__btn-submit"  />
+                        <input type="submit" value="Enviar" className="form-post__btn-submit" />
 
                     </form>
 
