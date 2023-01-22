@@ -1,3 +1,3 @@
 export const Global={
-    url:"http://localhost:3900/api/"
+    url:process.env.REACT_APP_API || "http://localhost:3900/api/"
 }
