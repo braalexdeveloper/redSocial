@@ -1,6 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+//import dotenv from "dotenv"
+
+
+//dotenv.config();
 
 // Importar assets 
 import "./assets/fonts/fontawesome-free-6.1.2-web/css/all.css";

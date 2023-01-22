@@ -76,7 +76,7 @@ export const UserList = ({users,allUsers,following,setFollowing,page,setPage,mor
                   <Link to={"/social/profile/"+user._id} className="user-info__name">{user.name}</Link>
                   <span className="user-info__divider"> | </span>
                   <Link to={"/social/profile/"+user._id} className="user-info__create-date">
-                    <ReactTimeAgo date={user.created_at} locale="es-ES" /></Link>
+                    <ReactTimeAgo date={Date.parse(user.created_at)} locale="es-ES" /></Link>
                 </div>
 
                 <h4 className="post__content">{user.bio}</h4>
