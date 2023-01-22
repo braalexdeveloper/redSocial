@@ -21,7 +21,7 @@ export const PrivateLayout = () => {
      <section className="layout__content">
        {auth._id ? <Outlet/> : <Navigate to="/login"/>}
       </section>
-
+{/*vite --port $PORT*/}
       {/* Barra lateral */}
       <Sidebar/>
     </>
