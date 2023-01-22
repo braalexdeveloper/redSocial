@@ -8,7 +8,7 @@ connection();
 
 //crear servidor
 const app=express();
-const puerto=3900;
+const puerto=process.env.PORT || 3900;
 
 //configurar cors
 app.use(cors());
