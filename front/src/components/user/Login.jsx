@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useForm } from '../../hooks/useForm'
 import { Global } from '../../helpers/Global';
 import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
+  const navigate=useNavigate();
     const { form,changed }=useForm({});
     const [login,setLogin]=useState("not-sended");
     const {setAuth}=useAuth();
@@ -31,12 +33,15 @@ export const Login = () => {
 
         //Set datos en el auth
         setAuth(data.user);
-
+      
+          setTimeout(()=>{
+           window.location.reload();
+          
+            
+         },1000)
+        
         //Redirección
-        setTimeout(()=>{
-          window.location.reload();
-        },1000)
-
+       
       }else{
         setLogin("error");
       }

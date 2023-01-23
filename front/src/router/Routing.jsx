@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter, Navigate, Link } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate, Link, HashRouter } from "react-router-dom";
 import { Followers } from '../components/follow/Followers';
 import { Following } from '../components/follow/Following';
 import { PrivateLayout } from '../components/layout/private/PrivateLayout';
@@ -17,7 +17,8 @@ import { AuthProvider } from '../context/AuthProvider';
 
 export const Routing = () => {
   return (
-    <BrowserRouter>
+   // <BrowserRouter>
+    <HashRouter>
     <AuthProvider>
       <Routes>
         <Route path='/' element={<PublicLayout />}>
@@ -48,6 +49,7 @@ export const Routing = () => {
 
         </Routes>
         </AuthProvider>
-    </BrowserRouter >
+        </HashRouter>
+    //</BrowserRouter >
   )
 }
