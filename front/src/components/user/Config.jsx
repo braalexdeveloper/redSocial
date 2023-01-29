@@ -38,7 +38,7 @@ export const Config = () => {
         }
 
         //Subida de imagenes
-        const fileInput = document.getElementById("file");
+        const fileInput = document.getElementById("filec");
         if (data.status === "success" && fileInput.files[0]) {
             //Recoger imagen al subir
             const formData = new FormData();
@@ -74,7 +74,7 @@ export const Config = () => {
             <div className="content__posts">
                 {saved === "saved" ? <strong className='alert alert-success'>Usuario Modificado Correctamente!!</strong> : ''}
                 {saved === "error" ? <strong className='alert alert-danger'>Usuario no se ha Modificado!!</strong> : ''}
-                <form className='update-form' onSubmit={updateUser}>
+                <form className='update-form' onSubmit={updateUser} enctype="multipart/form-data">
 
                     <div className='form-group'>
                         <label htmlFor='name'>Nombre</label>
@@ -114,7 +114,7 @@ export const Config = () => {
                             </div>
                         </div>
                         <br />
-                        <input type="file" name='file0' id="file" />
+                        <input type="file" name='file0' id="filec" />
                     </div>
                     <br />
 

@@ -148,7 +148,7 @@ export const Sidebar = () => {
 
                     {stored === "stored" ? <strong className='alert alert-success'>Publicada Correctamente!!</strong> : ''}
                     {stored === "error" ? <strong className='alert alert-danger'>No se ha publicado!!</strong> : ''}
-                    <form id="formulario" className="container-form__form-post" onSubmit={savePublication}>
+                    <form id="formulario" className="container-form__form-post" onSubmit={savePublication} enctype="multipart/form-data">
 
                         <div className="form-post__inputs">
                             <label htmlFor="text" className="form-post__label">¿Que estas pesando hoy?</label>
