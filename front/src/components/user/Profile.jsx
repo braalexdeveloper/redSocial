@@ -131,17 +131,19 @@ export const Profile = () => {
         }
     }
 
-    
+    useEffect(()=>{
+getCounts();
+    },[counters])
 
     return (
         <>
             <div className="aside__profile-info">
                 <div className="profile-info__general-info">
                     <div className="general-info__container-avatar">
-                        {!userProfile.image ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : userProfile.image === "default.png" ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + userProfile.image} className="post__user-image" alt="Foto de perfil" />}
+                        {!userProfile.image ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : userProfile.image === "default.png" ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : <img src={userProfile.image} className="post__user-image" alt="Foto de perfil" />}
                     </div>
                     <div className="general-info__container-names">
-                        <a className="container-names__name" href="/social/profile/63ab0bfae7f860816a8a9a70">{userProfile.name} {userProfile.surname}</a>
+                        <Link className="container-names__name" to={"/social/profile/"+userProfile._id}>{userProfile.name} {userProfile.surname}</Link>
                         <p className="container-names__nickname">{userProfile.nick}</p>
                         {userProfile._id !== auth._id &&
                             (iFollow ?

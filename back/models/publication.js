@@ -11,6 +11,7 @@ const PublicationSchema=Schema({
         required:true
     },
     file:String,
+    id_file:String,
     created_at:{
         type:Date,
         default:Date.now

@@ -37,7 +37,7 @@ export const PublicationsList = ({publications,getPublications,page,setPage,more
             <div className="post__container">
                 <div className="post__image-user">
                     <Link to={"/social/profile/" + publication.user._id} className="post__image-link">
-                        {!publication.user.image ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : publication.user.image === "default.png" ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + publication.user.image} className="post__user-image" alt="Foto de perfil" />}
+                        {!publication.user.image ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : publication.user.image === "default.png" ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : <img src={publication.user.image} className="post__user-image" alt="Foto de perfil" />}
 
                     </Link>
                 </div>
@@ -48,7 +48,7 @@ export const PublicationsList = ({publications,getPublications,page,setPage,more
                         <a href="#" className="user-info__create-date"><ReactTimeAgo date={Date.parse(publication.created_at)} locale="es-ES" /></a>
                     </div>
                     <h4 className="post__content">{publication.text}</h4>
-                    {publication.file && <img src={Global.url + "publication/media/" + publication.file} />}
+                    {publication.file && <img src={publication.file} />}
                 </div>
             </div>
             {

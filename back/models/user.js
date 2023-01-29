@@ -24,11 +24,9 @@ const userSchema=Schema({
         type:String,
         default:"role_user"
     },
-    image:{
-        type:String,
-        default:"default.png"
-    },
-    created_at:{
+    image:{type:String,default:"default.png"},
+    img_id:String,
+     created_at:{
         type:Date,
         default:Date.now
     }

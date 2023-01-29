@@ -1,6 +1,7 @@
 const Publication = require("../models/publication");
 const fs = require("fs");
 const path = require("path");
+const {uploadImage,deleteImage}=require("../middleware/cloudinary");
 
 //servicio
 const followUsersIds=require("../services/followUserIds");
@@ -42,12 +43,21 @@ const detail = (req, res) => {
 }
 
 const remove = (req, res) => {
-    Publication.find({ "user": req.user.id, "_id": req.params.id }).remove((error) => {
+
+
+    Publication.findOneAndDelete({ "user": req.user.id, "_id": req.params.id },async(error,result) => {
         if (error) return res.status(404).send({ status: "error", message: "No se pudo borrar la publicación" });
+        
+        if(result.id_file){
+           await deleteImage(result.id_file);
+        }
+        
+
         return res.status(200).json({
             status: "success",
             message: "Publicación Eliminada!!",
-            publication: req.params.id
+            publication: req.params.id,
+            result
         });
     });
 }
@@ -82,7 +92,7 @@ const userAllPublications = (req, res) => {
 
 }
 
-const upload = (req, res) => {
+const upload =async (req, res) => {
     let publicationId = req.params.id;
     //Recopger el fuichero de imagen y comprobar que existe
     if (!req.file) {
@@ -112,8 +122,9 @@ const upload = (req, res) => {
         });
     }
 
+    const imgcloud=await uploadImage(req.file.path);
     //Si es correcto , guarda la imagen en la bbdd
-    Publication.findOneAndUpdate({ "user": req.user.id, "_id": publicationId }, { file: req.file.filename }, { new: true }, (error, publicationUpdate) => {
+    Publication.findOneAndUpdate({ "user": req.user.id, "_id": publicationId }, { file: imgcloud.secure_url,id_file:imgcloud.public_id}, { new: true }, (error, publicationUpdate) => {
 
         if (error || !publicationUpdate) {
             return res.status(400).send({
@@ -122,6 +133,7 @@ const upload = (req, res) => {
             });
         }
 
+        fs.unlinkSync(req.file.path);
 
         res.status(200).json({
             status: "success",

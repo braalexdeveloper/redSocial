@@ -110,7 +110,7 @@ export const Config = () => {
                         <label htmlFor='file0'>Avatar</label>
                         <div className='avatar'>
                             <div className="general-info__container-avatar">
-                                {!auth.image ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + auth.image} className="container-avatar__img" alt="Foto de perfil" />}
+                                {!auth.image ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : <img src={auth.image} className="container-avatar__img" alt="Foto de perfil" />}
                             </div>
                         </div>
                         <br />

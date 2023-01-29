@@ -23,7 +23,7 @@ export const Login = () => {
       });
 
       const data=await request.json();
-      console.log(data)
+      
       
       if(data.status=="success"){
         //persistir los datos en el navegador

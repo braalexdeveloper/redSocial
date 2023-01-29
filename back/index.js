@@ -2,7 +2,7 @@
 const connection=require("./database/connection");
 const express=require("express");
 const cors=require("cors");
-
+require('dotenv').config();
 //conexion a bd
 connection();
 
@@ -18,13 +18,17 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 //config rutas
-const userRouter=require("./routes/user");
+/*const userRouter=require("./routes/user");
 const followRouter=require("./routes/follow");
-const publicationRouter=require("./routes/publication");
+const publicationRouter=require("./routes/publication");*/
 
-app.use('/api/user',userRouter);
+const rutass=require("./routes/index");
+
+/*app.use('/api/user',userRouter);
 app.use('/api/follow',followRouter);
-app.use('/api/publication',publicationRouter);
+app.use('/api/publication',publicationRouter);*/
+
+app.use('/api/',rutass);
 
 //levantar servidor
 app.listen(puerto,()=>{

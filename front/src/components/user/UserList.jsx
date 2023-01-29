@@ -65,7 +65,7 @@ export const UserList = ({users,allUsers,following,setFollowing,page,setPage,mor
 
               <div className="post__image-user">
               <Link to={"/social/profile/"+user._id} className="post__image-link">
-                  {!user.image ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : user.image === "default.png" ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + user.image} className="post__user-image" alt="Foto de perfil" />}
+                  {!user.image ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : user.image === "default.png" ? <img src={avatar} className="post__user-image" alt="Foto de perfil" /> : <img src={user.image} className="post__user-image" alt="Foto de perfil" />}
 
                 </Link>
               </div>

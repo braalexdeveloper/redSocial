@@ -2,5 +2,5 @@
 //console.log(api)
 //import.meta.env.REACT_APP_API
 export const Global={
-    url:"https://redsocial-production.up.railway.app/api/"
+    url:"http://localhost:3900/api/"
 }

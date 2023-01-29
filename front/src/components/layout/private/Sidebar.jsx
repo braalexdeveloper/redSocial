@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import avatar from "../../../assets/img/user.png";
 import { Global } from '../../../helpers/Global';
@@ -6,11 +7,26 @@ import useAuth from '../../../hooks/useAuth';
 import { useForm } from '../../../hooks/useForm';
 
 export const Sidebar = () => {
-    const { auth, counters } = useAuth();
+    const { auth, counters,setCounters } = useAuth();
 
     const { form, changed } = useForm({});
 
     const [stored, setStored] = useState("not-stored");
+
+    const countersRequest=async()=>{
+        //Peticio ajax al backend para obtener los cantidades de seguidos y seguidores
+        const requestCounters=await fetch(Global.url+"user/counters/"+auth._id,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":localStorage.getItem("token")
+            }
+        });
+  
+         
+          const dataCounters=await requestCounters.json();
+          setCounters(dataCounters);
+    }
 
     const savePublication = async (e) => {
 
@@ -36,6 +52,7 @@ export const Sidebar = () => {
         //Mostrar mensaje de éxito o error
         if (data.status === "success") {
             setStored("stored");
+            countersRequest();
         } else {
             setStored("error");
         }
@@ -71,6 +88,12 @@ export const Sidebar = () => {
 
     }
 
+    useEffect(()=>{
+        countersRequest();
+    },[counters])
+
+    
+
 
     return (
         <aside className="layout__aside">
@@ -85,7 +108,7 @@ export const Sidebar = () => {
 
                     <div className="profile-info__general-info">
                         <div className="general-info__container-avatar">
-                            {!auth.image ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + auth.image} className="container-avatar__img" alt="Foto de perfil" />}
+                            {!auth.image ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="container-avatar__img" alt="Foto de perfil" /> : <img src={auth.image} className="container-avatar__img" alt="Foto de perfil" />}
                         </div>
 
                         <div className="general-info__container-names">

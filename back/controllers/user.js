@@ -3,6 +3,7 @@ const Follow = require("../models/follow");
 const Publication = require("../models/publication");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const {uploadImage}=require("../middleware/cloudinary");
 
 
 //importar services
@@ -209,7 +210,7 @@ const updateUser = (req, res) => {
 
 }
 
-const upload = (req, res) => {
+const upload =async (req, res) => {
     //Recopger el fuichero de imagen y comprobar que existe
     if (!req.file) {
         return res.status(404).send({
@@ -238,8 +239,11 @@ const upload = (req, res) => {
         });
     }
 
+    const imgcloud=await uploadImage(req.file.path);
+
+console.log(imgcloud)
     //Si es correcto , guarda la imagen en la bbdd
-    User.findOneAndUpdate({ _id: req.user.id }, { image: req.file.filename }, { new: true }, (error, userUpdate) => {
+    User.findOneAndUpdate({ _id: req.user.id }, { image: imgcloud.url,img_id:imgcloud.public_id}, { new: true }, (error, userUpdate) => {
 
         if (error || !userUpdate) {
             return res.status(400).send({
@@ -248,7 +252,8 @@ const upload = (req, res) => {
             });
         }
 
-
+        fs.unlinkSync(req.file.path);
+        
         res.status(200).json({
             status: "success",
             user: userUpdate,

@@ -35,7 +35,7 @@ const Nav = () => {
             <ul className="container-lists__list-end">
                 <li className="list-end__item">
                     <NavLink to={"/social/profile/" + auth._id} className="list-end__link-image">
-                        {!auth.image ? <img src={avatar} className="list-end__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="list-end__img" alt="Foto de perfil" /> : <img src={Global.url + "user/avatar/" + auth.image} className="list-end__img" alt="Foto de perfil" />}
+                        {!auth.image ? <img src={avatar} className="list-end__img" alt="Foto de perfil" /> : auth.image === "default.png" ? <img src={avatar} className="list-end__img" alt="Foto de perfil" /> : <img src={auth.image} className="list-end__img" alt="Foto de perfil" />}
                     </NavLink>
                 </li>
                 <li className="list-end__item">
