@@ -1,6 +1,7 @@
 //importar dependecias
 const connection=require("./database/connection");
 const express=require("express");
+const bodyParser = require('body-parser');
 const cors=require("cors");
 require('dotenv').config();
 //conexion a bd
@@ -14,8 +15,8 @@ const puerto=process.env.PORT || 3900;
 app.use(cors());
 
 //convertir los datos del body a objetos js
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
 //config rutas
 /*const userRouter=require("./routes/user");
