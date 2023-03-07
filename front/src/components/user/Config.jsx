@@ -49,8 +49,7 @@ export const Config = () => {
                 method: "POST",
                 body: formData,
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": token
+                   "Authorization": token
                 }
             });
             const uploadData = await uploadRequest.json();
@@ -75,7 +74,7 @@ export const Config = () => {
             <div className="content__posts">
                 {saved === "saved" ? <strong className='alert alert-success'>Usuario Modificado Correctamente!!</strong> : ''}
                 {saved === "error" ? <strong className='alert alert-danger'>Usuario no se ha Modificado!!</strong> : ''}
-                <form className='update-form' onSubmit={updateUser} enctype="multipart/form-data">
+                <form className='update-form' onSubmit={updateUser} >
 
                     <div className='form-group'>
                         <label htmlFor='name'>Nombre</label>

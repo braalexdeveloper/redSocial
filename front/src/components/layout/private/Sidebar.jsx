@@ -67,7 +67,6 @@ export const Sidebar = () => {
                 method: "POST",
                 body: formData,
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": token
                 }
             });
@@ -149,7 +148,7 @@ export const Sidebar = () => {
 
                     {stored === "stored" ? <strong className='alert alert-success'>Publicada Correctamente!!</strong> : ''}
                     {stored === "error" ? <strong className='alert alert-danger'>No se ha publicado!!</strong> : ''}
-                    <form id="formulario" className="container-form__form-post" onSubmit={savePublication} enctype="multipart/form-data">
+                    <form id="formulario" className="container-form__form-post" onSubmit={savePublication} >
 
                         <div className="form-post__inputs">
                             <label htmlFor="text" className="form-post__label">¿Que estas pesando hoy?</label>

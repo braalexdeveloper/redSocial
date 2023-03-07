@@ -10,7 +10,7 @@ export const Registro = () => {
   const saveUser = async (e) => {
     e.preventDefault();
     let newUser = form;
-    console.log(form)
+   
     const request = await fetch(Global.url + "user/register", {
       method: "POST",
       body: JSON.stringify(newUser),
